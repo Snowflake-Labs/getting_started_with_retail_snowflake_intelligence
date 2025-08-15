@@ -1,0 +1,394 @@
+name: product_comments_and_stats
+description: This semantic model contains information about comments made online for different products/scents over time, and has statistical analysis of those comments.
+tables:
+  - name: DAILY_COMMENT_SUMMARY
+    base_table:
+      database: RETAIL_SNOWFLAKE_INTELLIGENCE_DB
+      schema: ANALYTICS
+      table: DAILY_COMMENT_SUMMARY
+    dimensions:
+      - name: PRODUCT_NAME
+        expr: PRODUCT_NAME
+        data_type: VARCHAR(100)
+        sample_values:
+          - Sea Salt Blossom
+          - Golden Amberleaf
+          - Spiced Oak & Apple
+          - Peachwood Breeze
+          - Lemon Verbena Grove
+        description: The name of the product, a scent of foaming hand soap, being commented on.
+        synonyms:
+          - item_name
+          - product_title
+          - item_title
+          - scent_name
+    time_dimensions:
+      - name: DAY
+        expr: DAY
+        data_type: DATE
+        sample_values:
+          - '2023-06-03'
+          - '2023-06-04'
+          - '2023-06-05'
+        description: Date of the daily comment summary.
+        synonyms:
+          - date
+          - calendar_day
+          - daily_date
+          - day_of_week
+          - calendar_date
+          - date_value
+    facts:
+      - name: NUM_NEGATIVE_REVIEWS
+        expr: NUM_NEGATIVE_REVIEWS
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '20'
+          - '22'
+          - '21'
+        description: The total number of negative reviews received on a product/scent on a given day.
+        synonyms:
+          - num_unfavorable_reviews
+          - num_bad_reviews
+          - count_negative_comments
+          - total_negative_ratings
+          - num_critical_reviews
+          - num_dislikes
+          - count_negative_posts
+      - name: NUM_POSITIVE_REVIEWS
+        expr: NUM_POSITIVE_REVIEWS
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '17'
+          - '12'
+          - '13'
+        description: The total number of positive reviews received on a product/scent on a given day.
+        synonyms:
+          - positive_reviews_count
+          - favorable_reviews
+          - good_reviews
+          - thumbs_up
+          - likes
+          - positive_ratings
+          - num_positive_comments
+          - count_positive_posts
+      - name: TOTAL_SENTIMENT
+        expr: TOTAL_SENTIMENT
+        data_type: FLOAT
+        sample_values:
+          - '-2.97'
+          - '-9.93'
+          - '-6.95'
+        description: This is the sum of the sentiment score for each posts across all posts on the given day. Each comment or post receives a sentiment score from -1 to 1, this is the sum of those values.
+        synonyms:
+          - cumulative_sentiment
+          - total_sentiment_score
+          - total_emotion
+          - sentiment_total
+          - cumulative_sentiment_score
+      - name: AVERAGE_SENTIMENT
+        expr: AVERAGE_SENTIMENT
+        data_type: FLOAT
+        sample_values:
+          - '-0.08'
+          - '-0.29'
+          - '-0.2'
+        description: The average sentiment score of comments made on a daily basis, ranging from -1 (very negative) to 1 (very positive), with 0 indicating a neutral sentiment.
+        synonyms:
+          - mean_sentiment
+          - average_feeling
+          - sentiment_average
+          - average_emotion_rating
+      - name: SUMMARY
+        expr: SUMMARY
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Customers have conflicting views on Sea Salt Blossom, with both soothing supporters and those who find it sticky.
+          - Customers have conflicting views on Sea Salt Blossom, with both refreshing supporters and those who find it irritating.
+          - Some users reported Sea Salt Blossom has a refreshing consistency and weak scent profile.
+        description: This column contains a daily summary of customer comments, providing a brief overview of the sentiment and opinions expressed by customers about a specific product/scent.
+        synonyms:
+          - abstract
+          - overview
+          - synopsis
+          - description
+          - recap
+          - summary_report
+          - brief
+          - rundown
+          - outline
+    description: Summary of online comments made about scents, either ecommerce reviews or through social posts
+    synonyms:
+      - daily_post_summary
+      - daily_scent_posts
+      - daily_scent_comment_info
+      - daily_product_comment_summary
+  - name: PRODUCT_COMMENT_STATS
+    base_table:
+      database: RETAIL_SNOWFLAKE_INTELLIGENCE_DB
+      schema: ANALYTICS
+      table: PRODUCT_COMMENT_STATS
+    dimensions:
+      - name: PRODUCT_NAME
+        expr: PRODUCT_NAME
+        data_type: VARCHAR(100)
+        sample_values:
+          - Citrus Petal
+          - Frosted Juniper
+          - Golden Amberleaf
+          - Peachwood Breeze
+        description: The name of the product, a scent of foaming hand soap, being commented on.
+        synonyms:
+          - product_title
+          - item_name
+          - product_label
+          - scent_name
+    time_dimensions:
+      - name: WEEK_START_DATE
+        expr: WEEK_START_DATE
+        data_type: DATE
+        sample_values:
+          - '2024-08-01'
+          - '2024-08-08'
+          - '2024-08-15'
+        description: The date that marks the start of the week for which product comment statistics are aggregated.
+        synonyms:
+          - start_of_week
+          - beginning_of_week
+          - week_commencement_date
+          - first_day_of_week
+          - weekly_start_date
+          - initial_week_date
+      - name: WEEK_NUMBER
+        expr: WEEK_NUMBER
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '1'
+          - '2'
+          - '3'
+        description: Number of weeks (groups of seven days, not calendar) since product launch, starting at 1.
+        synonyms:
+          - week_num
+          - week_no
+          - week_index
+          - week_id
+          - week_seq
+          - week_order
+    facts:
+      - name: TOTAL_REVIEWS
+        expr: TOTAL_REVIEWS
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '326'
+          - '328'
+          - '312'
+        description: The total number of reviews/comments/posts received for a product/scent for the given week.
+        synonyms:
+          - total_comments
+          - total_ratings
+          - review_count
+          - total_feedback
+          - total_opinions
+          - review_total
+          - feedback_count
+          - total_responses
+          - count_of_posts
+      - name: TOTAL_POSITIVE_REVIEWS
+        expr: TOTAL_POSITIVE_REVIEWS
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '206'
+          - '197'
+          - '164'
+        description: The total number of positive reviews/comments/posts received for a product/scent for the given week.
+        synonyms:
+          - positive_reviews_count
+          - total_favorable_reviews
+          - favorable_review_total
+          - good_reviews_total
+          - total_high_rating_reviews
+          - positive_post_count
+          - number_of_positive_posts
+      - name: TOTAL_NEGATIVE_REVIEWS
+        expr: TOTAL_NEGATIVE_REVIEWS
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '120'
+          - '131'
+          - '148'
+        description: The total number of positive reviews/comments/posts received for a product/scent for the given week.
+        synonyms:
+          - total_unfavorable_reviews
+          - total_bad_reviews
+          - total_critical_reviews
+          - total_negative_comments
+          - total_unfavorable_comments
+          - total_dislikes
+          - count_negative_posts
+      - name: DAILY_REVIEW_AVG
+        expr: DAILY_REVIEW_AVG
+        data_type: FLOAT
+        sample_values:
+          - '46.571428571'
+          - '46.857142857'
+          - '44.571428571'
+        description: The average number of reviews received by a product/scent on a daily basis.
+        synonyms:
+          - average_daily_reviews
+          - daily_review_mean
+          - mean_daily_rating
+          - avg_daily_rating
+          - average_reviews_per_day
+      - name: POSITIVE_REVIEW_RATIO
+        expr: POSITIVE_REVIEW_RATIO
+        data_type: FLOAT
+        sample_values:
+          - '0.6266062015'
+          - '0.6064487641'
+          - '0.5280344119'
+        description: The percentage of positive reviews/comments/posts for a product/scent, calculated by dividing the number of positive reviews by the total number of reviews.
+        synonyms:
+          - positive_review_proportion
+          - positive_review_percentage
+          - review_positivity_rate
+          - favorable_review_ratio
+          - positive_review_score
+      - name: AVG_SENTIMENT
+        expr: AVG_SENTIMENT
+        data_type: FLOAT
+        sample_values:
+          - '0.2657142857'
+          - '0.2428571429'
+          - '0.08714285714'
+        description: The average sentiment score of customer comments/posts/reviews for a product/scent across the week, ranging from -1 (very negative) to 1 (very positive), with 0 indicating a neutral sentiment.
+        synonyms:
+          - average_sentiment_score
+          - sentiment_average
+          - mean_sentiment
+          - overall_sentiment
+          - sentiment_level
+          - average_mood
+          - sentiment_rating
+      - name: SENTIMENT_STDDEV
+        expr: SENTIMENT_STDDEV
+        data_type: FLOAT
+        sample_values:
+          - '0.1430451144'
+          - '0.1348720734'
+          - '0.09446591726'
+        description: The standard deviation of sentiment scores for product comments/reviews/posts, indicating the amount of variation or dispersion in the sentiment expressed by customers about a product/scent.
+        synonyms:
+          - sentiment_standard_deviation
+          - sentiment_variance
+          - sentiment_dispersion
+          - sentiment_volatility
+          - sentiment_uncertainty
+      - name: SENTIMENT_P_VALUE
+        expr: SENTIMENT_P_VALUE
+        data_type: FLOAT
+        sample_values:
+          - '0.5710293064'
+          - '0.348067291'
+          - '0.0005804305544'
+        description: P-value from a t-test, detecting whether the average sentiment for this product/scent is statistically different from scents in general.
+        synonyms:
+          - p_value_sentiment
+          - sentiment_probability
+          - sentiment_significance
+          - probability_value_sentiment
+          - statistical_significance_sentiment
+      - name: SENTIMENT_PERCENTILE
+        expr: SENTIMENT_PERCENTILE
+        data_type: FLOAT
+        sample_values:
+          - '0.5833333333'
+          - '0.6'
+          - '0.4'
+        description: The percentile of sentiments for all products/scents that this average sentiment is higher than.
+        synonyms:
+          - percentile_rank_sentiment
+          - sentiment_rank
+          - sentiment_quartile
+          - sentiment_distribution
+          - sentiment_position
+      - name: SENTIMENT_Z_SCORE
+        expr: SENTIMENT_Z_SCORE
+        data_type: FLOAT
+        sample_values:
+          - '-0.1010075584'
+          - '-0.1753231106'
+          - '-0.5076650897'
+        description: A measure of the sentiment of product comments, with a value of 0 indicating a neutral sentiment, a negative value indicating a negative sentiment, and a positive value indicating a positive sentiment, calculated as the number of standard deviations from the mean sentiment score.
+        synonyms:
+          - standardized_sentiment
+          - sentiment_standard_score
+          - z_transformed_sentiment
+          - normalized_sentiment_score
+          - sentiment_deviation_score
+      - name: SENTIMENT_TREND
+        expr: SENTIMENT_TREND
+        data_type: FLOAT
+        sample_values:
+          - '-0.0225'
+          - '-0.0325'
+          - '0.0007142857143'
+        description: The overall sentiment trend of product comments, represented as a decimal value between -1 (very negative) and 1 (very positive), indicating the direction and magnitude of change in sentiment over time.
+        synonyms:
+          - sentiment_direction
+          - sentiment_pattern
+          - emotional_trend
+          - opinion_trend
+          - sentiment_shift
+          - emotional_direction
+          - attitude_trend
+      - name: TREND_P_VALUE
+        expr: TREND_P_VALUE
+        data_type: FLOAT
+        sample_values:
+          - '0.4558676211'
+          - '0.230977341'
+          - '0.9722737506'
+        description: The probability value indicating the trend of product comments, with lower values suggesting a statistically significant trend and higher values indicating no trend, used to determine if the sentiment of product comments is changing over time.
+        synonyms:
+          - trend_probability_value
+          - trend_significance_level
+          - trend_statistical_significance
+          - trend_confidence_level
+          - trend_reliability_score
+    description: Contains weekly data about comments and social posts about our products, scented hand soaps, along with statistical analysis of those online posts.
+    synonyms:
+      - scent_comment_stats
+      - product_comment_analysis
+      - weekly_scent_comment_statistics
+    primary_key:
+      columns:
+        - PRODUCT_NAME
+relationships:
+  - name: product_name_join
+    join_type: inner
+    relationship_type: many_to_one
+    left_table: DAILY_COMMENT_SUMMARY
+    relationship_columns:
+      - left_column: PRODUCT_NAME
+        right_column: PRODUCT_NAME
+    right_table: PRODUCT_COMMENT_STATS
+verified_queries:
+  - name: Most recently introduced products
+    question: What are the two most recently introduced products?
+    use_as_onboarding_question: false
+    sql: SELECT product_name, week_number FROM product_comment_stats WHERE week_number = 1 ORDER BY week_start_date DESC NULLS LAST LIMIT 2
+    verified_by: Jim Warner
+    verified_at: 1747803264
+  - name: Recent Peachwood Breeze commentary
+    question: What are people saying online about Peachwood Breeze recently?
+    use_as_onboarding_question: false
+    sql: SELECT day, summary FROM daily_comment_summary WHERE product_name = 'Peachwood Breeze' ORDER BY day DESC NULLS LAST
+    verified_by: Jim Warner
+    verified_at: 1747839435
+  - name: Positive commentary of recent scents
+    question: Is one of my two most recent scents getting more positive commentary than usual online?
+    use_as_onboarding_question: false
+    sql: WITH recent_scents AS (SELECT product_name, week_start_date FROM product_comment_stats WHERE week_number = 1 ORDER BY week_start_date DESC NULLS LAST LIMIT 2) SELECT s.product_name, s.sentiment_z_score, s.sentiment_p_value, s.avg_sentiment FROM product_comment_stats AS s INNER JOIN recent_scents AS r ON s.product_name = r.product_name WHERE s.sentiment_z_score > 0 AND s.sentiment_p_value < 0.05 ORDER BY s.sentiment_z_score DESC NULLS LAST
+    verified_by: Jim Warner
+    verified_at: 1747839950
+custom_instructions: Answer statistically when possible, by making historical comparisons.

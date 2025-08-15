@@ -1,0 +1,452 @@
+name: product_sales_analysis
+description: This semantic model describes a table which contains weekly data about sales of our products, scented hand soaps, along with statistical analysis of those sales.
+tables:
+  - name: PRODUCT_SALES_ANALYSIS
+    base_table:
+      database: RETAIL_SNOWFLAKE_INTELLIGENCE_DB
+      schema: ANALYTICS
+      table: PRODUCT_SALES_ANALYSIS
+    dimensions:
+      - name: PRODUCT_NAME
+        expr: PRODUCT_NAME
+        data_type: VARCHAR(100)
+        description: Name of the product or scent
+        sample_values:
+          - Sea Salt Blossom
+          - Golden Amberleaf
+          - Spiced Oak & Apple
+          - Peachwood Breeze
+          - Lemon Verbena Grove
+        synonyms:
+          - product_title
+          - item_name
+          - scent_name
+          - fragrance_name
+    time_dimensions:
+      - name: PERIOD_START_DATE
+        expr: PERIOD_START_DATE
+        data_type: DATE
+        description: Start date of this analysis period (week)
+        sample_values:
+          - '2023-06-03'
+          - '2023-06-10'
+          - '2023-06-17'
+        synonyms:
+          - analysis_start_date
+          - period_begin_date
+          - start_of_period
+          - initial_date
+          - beginning_date
+          - period_initiation_date
+      - name: PERIOD_END_DATE
+        expr: PERIOD_END_DATE
+        data_type: DATE
+        description: End date of this analysis period (week)
+        sample_values:
+          - '2023-06-09'
+          - '2023-06-16'
+          - '2023-06-23'
+        synonyms:
+          - end_date
+          - end_period
+          - period_close_date
+          - analysis_end_date
+          - reporting_end_date
+          - end_of_period_date
+      - name: WEEK_NUMBER
+        expr: WEEK_NUMBER
+        data_type: NUMBER(38,0)
+        description: Number of weeks (groups of seven days, not calendar) since product launch, starting at 1.
+        sample_values:
+          - '1'
+          - '2'
+          - '3'
+        synonyms:
+          - week
+          - period_number
+          - cycle_number
+          - interval_number
+          - reporting_week
+          - calendar_week
+          - week_from_launch
+    facts:
+      - name: TOTAL_SALES_UNITS_ONLINE
+        expr: TOTAL_SALES_UNITS_ONLINE
+        data_type: NUMBER(38,0)
+        description: Total number of units of hand soap in the given scent during this week online
+        sample_values:
+          - '1766'
+          - '1477'
+          - '1221'
+        synonyms:
+          - online_sales_volume
+          - e-commerce_sales
+          - digital_sales
+          - internet_sales
+          - web_sales
+          - online_transactions
+          - cyber_sales
+          - online_revenue
+          - digital_transactions
+      - name: TOTAL_SALES_UNITS_NORTHEAST
+        expr: TOTAL_SALES_UNITS_NORTHEAST
+        data_type: NUMBER(38,0)
+        description: Total number of units of hand soap in the given scent during this week out of the Northeast distribution center
+        sample_values:
+          - '1784'
+          - '1407'
+          - '1388'
+        synonyms:
+          - northeast_sales_volume
+          - northeast_total_sales
+          - northeast_region_sales
+          - northeast_sales_total
+          - northeast_sales_figure
+          - northeast_sales_amount
+      - name: TOTAL_SALES_UNITS_NORTHWEST
+        expr: TOTAL_SALES_UNITS_NORTHWEST
+        data_type: NUMBER(38,0)
+        description: Total number of units of hand soap in the given scent during this week out of the Northwest distribution center
+        sample_values:
+          - '1848'
+          - '1397'
+          - '1294'
+        synonyms:
+          - northwest_sales_volume
+          - northwest_total_sales
+          - northwest_region_sales
+          - northwest_area_sales
+          - northwest_territory_sales
+          - northwest_market_sales
+      - name: TOTAL_SALES_UNITS_SOUTHEAST
+        expr: TOTAL_SALES_UNITS_SOUTHEAST
+        data_type: NUMBER(38,0)
+        description: Total number of units of hand soap in the given scent during this week out of the Southeast distribution center
+        sample_values:
+          - '1597'
+          - '1413'
+          - '1275'
+        synonyms:
+          - southeast_sales
+          - southeast_total_sales
+          - southeast_region_sales
+          - southeast_area_sales
+          - southeast_zone_sales
+          - southeast_total_units_sold
+      - name: TOTAL_SALES_UNITS_SOUTHWEST
+        expr: TOTAL_SALES_UNITS_SOUTHWEST
+        data_type: NUMBER(38,0)
+        description: Total number of units of hand soap in the given scent during this week out of the Southwest distribution center
+        sample_values:
+          - '1651'
+          - '1389'
+          - '1094'
+        synonyms:
+          - southwest_sales_volume
+          - southwest_total_sales
+          - southwest_region_sales
+          - southwest_area_sales
+          - southwest_territory_sales
+          - southwest_market_sales
+      - name: TOTAL_SALES_UNITS
+        expr: TOTAL_SALES_UNITS
+        data_type: NUMBER(38,0)
+        description: Total number of units of hand soap in the given scent during this week out of all distribution centers combined, both online and physical.
+        sample_values:
+          - '8646'
+          - '7083'
+          - '4336'
+        synonyms:
+          - total_units_sold
+          - total_sales_volume
+          - overall_sales
+          - total_product_sales
+          - aggregate_sales
+          - total_sales_quantity
+      - name: AVG_DAILY_UNITS_ONLINE
+        expr: AVG_DAILY_UNITS_ONLINE
+        data_type: FLOAT
+        description: Average daily sales during this period (week) online
+        sample_values:
+          - '252.285714286'
+          - '211'
+          - '174.428571429'
+        synonyms:
+          - daily_online_average
+          - average_daily_online_sales
+          - online_daily_mean
+          - mean_daily_online_units
+          - daily_online_sales_average
+      - name: AVG_DAILY_UNITS_NORTHEAST
+        expr: AVG_DAILY_UNITS_NORTHEAST
+        data_type: FLOAT
+        description: Average daily sales during this period (week) out of the Northeast distribution center
+        sample_values:
+          - '254.857142857'
+          - '201'
+          - '198.285714286'
+        synonyms:
+          - avg_daily_northeast_sales
+          - northeast_average_daily_sales
+          - daily_northeast_sales_average
+          - northeast_avg_daily_units_sold
+          - average_northeast_daily_volume
+      - name: AVG_DAILY_UNITS_NORTHWEST
+        expr: AVG_DAILY_UNITS_NORTHWEST
+        data_type: FLOAT
+        description: Average daily sales during this period (week) out of the Northwest distribution center
+        sample_values:
+          - '264'
+          - '199.571428571'
+          - '184.857142857'
+        synonyms:
+          - avg_daily_northwest_sales
+          - northwest_average_daily_sales
+          - daily_average_units_northwest
+          - northwest_daily_sales_average
+          - average_northwest_daily_volume
+      - name: AVG_DAILY_UNITS_SOUTHEAST
+        expr: AVG_DAILY_UNITS_SOUTHEAST
+        data_type: FLOAT
+        description: Average daily sales during this period (week) out of the Southeast distribution center
+        sample_values:
+          - '228.142857143'
+          - '201.857142857'
+          - '182.142857143'
+        synonyms:
+          - avg_daily_se_sales
+          - southeast_avg_daily_sales
+          - daily_avg_se_units
+          - southeast_daily_sales_avg
+          - avg_se_daily_volume
+      - name: AVG_DAILY_UNITS_SOUTHWEST
+        expr: AVG_DAILY_UNITS_SOUTHWEST
+        data_type: FLOAT
+        description: Average daily sales during this period (week) out of the Southwest distribution center
+        sample_values:
+          - '235.857142857'
+          - '198.428571429'
+          - '156.285714286'
+        synonyms:
+          - southwest_average_daily_sales
+          - southwest_daily_sales_average
+          - southwest_mean_daily_units
+          - average_southwest_daily_units
+          - southwest_daily_average_sales
+      - name: AVG_DAILY_UNITS_TOTAL
+        expr: AVG_DAILY_UNITS_TOTAL
+        data_type: FLOAT
+        description: Average total daily sales during this period (week) across all distribution centers
+        sample_values:
+          - '1235.142857143'
+          - '1011.857142857'
+          - '421.428571429'
+        synonyms:
+          - average_daily_total_sales
+          - total_average_daily_sales
+          - daily_total_sales_average
+          - average_total_daily_units_sold
+          - total_daily_sales_mean
+      - name: SALES_GROWTH
+        expr: SALES_GROWTH
+        data_type: FLOAT
+        description: Growth rate of sales compared to the previous period (week)
+        sample_values:
+          - '0'
+          - '-18.077723803'
+          - '-11.449950586'
+        synonyms:
+          - growth_rate
+          - sales_increase
+          - revenue_growth
+          - period_over_period_growth
+          - sales_change
+          - percentage_change
+          - growth_percentage
+          - sales_velocity
+      - name: CUMULATIVE_SALES_UNITS
+        expr: CUMULATIVE_SALES_UNITS
+        data_type: NUMBER(38,0)
+        description: Total units sold since launch through this period (week)
+        sample_values:
+          - '8646'
+          - '15729'
+          - '22001'
+        synonyms:
+          - total_sales_since_launch
+          - cumulative_total_sales
+          - running_total_sales
+          - sales_to_date
+          - lifetime_sales
+          - total_units_sold_to_date
+      - name: ZSCORE
+        expr: ZSCORE
+        data_type: FLOAT
+        description: Z-score comparing sales to historical scents at same period (week number) from launch
+        sample_values:
+          - '1.966127431'
+          - '1.130706721'
+          - '1.048638119'
+        synonyms:
+          - standard_score
+          - z_value
+          - standardized_score
+          - normal_score
+          - z_statistic
+      - name: PERCENTILE
+        expr: PERCENTILE
+        data_type: FLOAT
+        description: Percentile ranking of sales among all scents for this period
+        sample_values:
+          - '100'
+          - '80'
+          - '70'
+        synonyms:
+          - percentile_rank
+          - ranking
+          - percentile_score
+          - quantile_rank
+          - relative_position
+      - name: PCT_25
+        expr: PCT_25
+        data_type: FLOAT
+        description: 25th percentile value of sales for this period across all scents
+        sample_values:
+          - '5179.25'
+          - '4273.5'
+          - '3960.25'
+        synonyms:
+          - 25th_percentile
+          - lower_quartile
+          - first_quartile
+          - q1_value
+          - twenty_fifth_percentile
+      - name: PCT_50
+        expr: PCT_50
+        data_type: FLOAT
+        description: 50th percentile (median) value of sales for this period
+        sample_values:
+          - '6187.5'
+          - '5989.5'
+          - '4903.5'
+        synonyms:
+          - median_value
+          - middle_value
+          - 50th_percentile
+          - midpoint
+          - average_rank
+          - middle_rank
+          - central_tendency
+      - name: PCT_75
+        expr: PCT_75
+        data_type: FLOAT
+        description: 75th percentile value of sales for this period across all scents
+        sample_values:
+          - '7255.75'
+          - '6906.5'
+          - '5544.25'
+        synonyms:
+          - upper_quartile
+          - seventy_fifth_percentile
+          - q3_value
+          - third_quartile_value
+          - seventy_fifth_percentile_value
+      - name: PCT_90
+        expr: PCT_90
+        data_type: FLOAT
+        description: 90th percentile value of sales for this period across all scents
+        sample_values:
+          - '8223.1'
+          - '7355.4'
+          - '6384.2'
+        synonyms:
+          - 90th_percentile_value
+          - high_value_threshold
+          - top_10_percent
+          - ninetieth_percentile
+          - high_end_value
+      - name: TTEST_PVALUE
+        expr: TTEST_PVALUE
+        data_type: FLOAT
+        description: P-value from t-test Z-score comparing sales to historical scents at same period (week number) from launch
+        sample_values:
+          - '0.1029165748'
+          - '0.3414629353'
+          - '0.3757288788'
+        synonyms:
+          - p_value
+          - probability_value
+          - t_test_probability
+          - significance_level
+          - test_statistic_probability
+          - statistical_significance_value
+      - name: COMPARATIVE_LIFT
+        expr: COMPARATIVE_LIFT
+        data_type: FLOAT
+        description: Percentage difference of sales in this period from average historical performance
+        sample_values:
+          - '38.544740743'
+          - '23.956528587'
+          - '23.060019228'
+        synonyms:
+          - percentage_difference_from_average
+          - comparative_improvement
+          - lift_from_average
+          - relative_gain
+          - percentage_lift
+          - comparative_percentage_change
+      - name: IS_SIGNIFICANT
+        expr: IS_SIGNIFICANT
+        data_type: BOOLEAN
+        description: Indicates whether sales this period are statistically different from historical scents at same period (week number) from launch at the 95% confidence interval
+        sample_values:
+          - 'FALSE'
+          - 'TRUE'
+        synonyms:
+          - statistically_significant
+          - significant_difference
+          - p_value_threshold_met
+          - significant_result
+          - statistically_valid
+          - reliable_difference
+          - valid_result
+          - significant_outcome
+    description: Contains weekly data about sales of our products, scented hand soaps, along with statistical analysis of those sales.
+    synonyms:
+      - scent_sales_analysis
+      - product_sales_statistics
+      - scent_sales_stats
+      - weekly_scent_analysis
+      - weekly_product_sales_data
+verified_queries:
+  - name: Newest scents
+    question: What are the newest scents introduced?
+    use_as_onboarding_question: false
+    sql: WITH first_appearance AS (SELECT product_name, MIN(period_start_date) AS launch_date FROM product_sales_analysis GROUP BY product_name) SELECT product_name, launch_date FROM first_appearance ORDER BY launch_date DESC NULLS LAST
+    verified_by: Jim Warner
+    verified_at: 1747793127
+  - name: Newest scent statistical performance
+    question: Are the two newest scents performing statistically better than normal?
+    use_as_onboarding_question: false
+    sql: WITH newest_scents AS (SELECT product_name, MIN(period_start_date) AS launch_date FROM product_sales_analysis GROUP BY product_name ORDER BY launch_date DESC NULLS LAST LIMIT 2), latest_stats AS (SELECT psa.* FROM product_sales_analysis AS psa INNER JOIN newest_scents AS ns ON psa.product_name = ns.product_name QUALIFY ROW_NUMBER() OVER (PARTITION BY psa.product_name ORDER BY period_end_date DESC NULLS LAST) = 1) SELECT product_name, period_end_date, is_significant, comparative_lift, zscore FROM latest_stats ORDER BY comparative_lift DESC NULLS LAST
+    verified_by: Jim Warner
+    verified_at: 1747793501
+  - name: Second week average
+    question: How many units does the average scent sell in its second week?
+    use_as_onboarding_question: false
+    sql: SELECT AVG(total_sales_units) AS avg_second_week_sales FROM product_sales_analysis WHERE week_number = 2
+    verified_by: Jim Warner
+    verified_at: 1747793663
+  - name: Typical total sales weeks 2-10
+    question: How many units total does the typical scent sell from weeks 2-10?
+    use_as_onboarding_question: false
+    sql: WITH SCENT_SALES AS (SELECT product_name, SUM(total_sales_units) AS total_units_sold FROM product_sales_analysis WHERE week_number BETWEEN 2 AND 10 GROUP BY product_name ORDER BY total_units_sold DESC NULLS LAST) SELECT AVG(total_units_sold) FROM SCENT_SALES
+    verified_by: Jim Warner
+    verified_at: 1747794419
+  - name: Top sales online projection Peachwood Breeze next 12 weeks
+    question: If Peachwood Breeze sells online like previous top performing scents, what will be the likely sales online over the next 12 weeks?
+    use_as_onboarding_question: false
+    sql: WITH WEEKLY_TOP_SALES AS (SELECT week_number, AVG(pct_90 * (total_sales_units_online / total_sales_units)) AS pct_90_online FROM product_sales_analysis WHERE week_number BETWEEN 2 AND 13 GROUP BY week_number) SELECT SUM(pct_90_online) AS top_sales FROM WEEKLY_TOP_SALES
+    verified_by: Jim Warner
+    verified_at: 1748030260
+custom_instructions: Answer statistically when possible, by making historical comparisons weeks against weeks, using multiple scents and not just one.

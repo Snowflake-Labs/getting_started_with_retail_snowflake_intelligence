@@ -1,0 +1,146 @@
+name: product_inventory
+description: Semantic model for product inventory by distribution center.
+tables:
+  - name: PRODUCT_INVENTORY
+    base_table:
+      database: RETAIL_SNOWFLAKE_INTELLIGENCE_DB
+      schema: ANALYTICS
+      table: PRODUCT_INVENTORY
+    dimensions:
+      - name: PRODUCT_NAME
+        expr: PRODUCT_NAME
+        data_type: VARCHAR(100)
+        sample_values:
+          - Sea Salt Blossom
+          - Golden Amberleaf
+          - Spiced Oak & Apple
+          - Lemon Verbena Grove
+          - Peachwood Breeze
+        description: The name of the product, a particular scent of foaming hand soap, in the inventory.
+        synonyms:
+          - item_name
+          - product_title
+          - product_label
+          - scent_name
+          - soap_scent_label
+    time_dimensions:
+      - name: INVENTORY_AS_OF_DATE
+        expr: INVENTORY_AS_OF_DATE
+        data_type: DATE
+        sample_values:
+          - '2025-06-02'
+        description: The date as of which the inventory levels are reported, or the date we last took inventory.
+        synonyms:
+          - inventory_date
+          - stock_date
+          - product_availability_date
+          - date_of_record
+          - snapshot_date
+          - as_of_date
+          - inventory_snapshot_date
+          - stock_snapshot_date
+    facts:
+      - name: UNITS_AVAILABLE_ONLINE
+        expr: UNITS_AVAILABLE_ONLINE
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '15449'
+          - '17229'
+          - '15485'
+        description: The number of units of a product that are currently available at the distribution center used for online purchases.
+        synonyms:
+          - online_stock
+          - online_inventory
+          - available_units_online
+          - web_available_quantity
+          - digital_stock_level
+          - internet_available_units
+      - name: UNITS_AVAILABLE_NORTHEAST
+        expr: UNITS_AVAILABLE_NORTHEAST
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '15948'
+          - '17174'
+          - '15726'
+        description: The total quantity of a product available from the distribution center which fulfills purchases at stores in the Northeast region.
+        synonyms:
+          - northeast_stock
+          - northeast_inventory
+          - northeast_quantity
+          - northeast_availability
+          - northeast_supply
+          - northeast_stock_level
+      - name: UNITS_AVAILABLE_SOUTHEAST
+        expr: UNITS_AVAILABLE_SOUTHEAST
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '15890'
+          - '16970'
+          - '14989'
+        description: The total quantity of a product available from the distribution center which fulfills purchases at stores in the Southeast region.
+        synonyms:
+          - southeast_inventory
+          - southeast_stock
+          - southeast_quantity
+          - southeast_units_in_stock
+          - southeast_available_stock
+          - southeast_product_count
+      - name: UNITS_AVAILABLE_SOUTHWEST
+        expr: UNITS_AVAILABLE_SOUTHWEST
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '15439'
+          - '16647'
+          - '15822'
+        description: The total quantity of a product available from the distribution center which fulfills purchases at stores in the Southwest region.
+        synonyms:
+          - southwest_stock
+          - southwest_inventory
+          - southwest_quantity
+          - southwest_units_in_stock
+          - southwest_available_stock
+          - southwest_product_count
+      - name: UNITS_AVAILABLE_NORTHWEST
+        expr: UNITS_AVAILABLE_NORTHWEST
+        data_type: NUMBER(38,0)
+        sample_values:
+          - '15752'
+          - '16957'
+          - '15462'
+        description: The total quantity of a product available from the distribution center which fulfills purchases at stores in the Northwest region.
+        synonyms:
+          - northwest_stock
+          - northwest_inventory
+          - nw_available_units
+          - pacific_northwest_stock
+          - western_region_units
+    description: Table containing the number of items of each foaming hand soap product scent we have in inventory in each of our distribution centers.
+    synonyms:
+      - scent_inventory
+      - soap_scent_inventory
+      - product_on_hand
+verified_queries:
+  - name: Scent with most available inventory
+    question: Which sent has the most inventory available for online purchases?
+    use_as_onboarding_question: false
+    sql: SELECT product_name, units_available_online FROM product_inventory WHERE inventory_as_of_date = (SELECT MAX(inventory_as_of_date) FROM product_inventory) ORDER BY units_available_online DESC NULLS LAST LIMIT 1
+    verified_by: Jim Warner
+    verified_at: 1747779525
+  - name: Days scent will last
+    question: If I sell 1,000 units of Peachwood Breeze online per day, how long will my current stock last?
+    use_as_onboarding_question: false
+    sql: SELECT units_available_online / 1000 FROM product_inventory WHERE product_name = 'Peachwood Breeze' AND inventory_as_of_date = (SELECT MAX(inventory_as_of_date) FROM product_inventory)
+    verified_by: Jim Warner
+    verified_at: 1747779823
+  - name: Number remaining based on sales
+    question: If I sell 1,000 units of Vanilla Cedarlight per day for the next week in the northeast region, how many units will I have left in that region?
+    use_as_onboarding_question: false
+    sql: SELECT units_available_northeast - (7 * 1000) FROM product_inventory WHERE product_name = 'Vanilla Cedarlight' AND inventory_as_of_date = (SELECT MAX(inventory_as_of_date) FROM product_inventory)
+    verified_by: Jim Warner
+    verified_at: 1747780190
+  - name: Most inventory available
+    question: Which distribution center has the most available inventory for Peachwood Breeze?
+    use_as_onboarding_question: false
+    sql: WITH latest_inventory AS (SELECT GREATEST(units_available_online, units_available_northeast, units_available_southeast, units_available_southwest, units_available_northwest) AS max_units, CASE GREATEST(units_available_online, units_available_northeast, units_available_southeast, units_available_southwest, units_available_northwest) WHEN units_available_online THEN 'Online' WHEN units_available_northeast THEN 'Northeast' WHEN units_available_southeast THEN 'Southeast' WHEN units_available_southwest THEN 'Southwest' WHEN units_available_northwest THEN 'Northwest' END AS distribution_center FROM product_inventory WHERE product_name = 'Peachwood Breeze' AND inventory_as_of_date = (SELECT MAX(inventory_as_of_date) FROM product_inventory)) SELECT distribution_center, max_units FROM latest_inventory
+    verified_by: Jim Warner
+    verified_at: 1747839246
