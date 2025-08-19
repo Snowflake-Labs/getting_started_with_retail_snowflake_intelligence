@@ -91,6 +91,8 @@ GRANT USAGE ON DATABASE snowflake_intelligence TO ROLE PUBLIC;
 CREATE SCHEMA IF NOT EXISTS snowflake_intelligence.agents;
 GRANT USAGE ON SCHEMA snowflake_intelligence.agents TO ROLE PUBLIC;
 
+GRANT CREATE AGENT ON SCHEMA snowflake_intelligence.agents TO ROLE retail_snowflake_intelligence_role;
+
 /*--
  Lather and Leaf - Idempotent Setup Script
  This script creates all tables, views, dynamic tables, and stored procedures
