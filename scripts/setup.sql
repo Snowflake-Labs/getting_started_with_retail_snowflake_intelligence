@@ -494,7 +494,7 @@ CREATE OR REPLACE PROCEDURE generate_product_comment_stats()
 RETURNS STRING
 LANGUAGE PYTHON
 RUNTIME_VERSION = '3.11'
-PACKAGES = ('snowflake-snowpark-python', 'pandas', 'numpy', 'scipy-stats')
+PACKAGES = ('snowflake-snowpark-python', 'pandas', 'numpy', 'scipy')
 HANDLER = 'main'
 AS
 $$
@@ -821,7 +821,7 @@ CREATE OR REPLACE PROCEDURE generate_product_sales_analysis()
 RETURNS STRING
 LANGUAGE PYTHON
 RUNTIME_VERSION = '3.11'
-PACKAGES = ('snowflake-snowpark-python', 'pandas', 'numpy', 'scipy-stats')
+PACKAGES = ('snowflake-snowpark-python', 'pandas', 'numpy', 'scipy')
 HANDLER = 'main'
 AS
 $$
