@@ -1,16 +1,14 @@
 [![Snowflake - Certified](https://img.shields.io/badge/Snowflake-Certified-2ea44f?style=for-the-badge&logo=snowflake)](https://developers.snowflake.com/solutions/)
-# No Notebooks Test
+# Retail Intelligence
 
-This comprehensive guide demonstrates Testing SQL-only demo without notebooks. You will explore Snowflake's powerful capabilities to build a complete data solution.
+This comprehensive demo showcases **Retail Intelligence** capabilities for AI-powered retail analytics with customer sentiment analysis using Lather and Leaf hand soap company as a real-world example. You'll explore Semantic Models, Snowflake Intelligence, Cortex Analyst to build a complete end-to-end solution. Follow the step-by-step setup to experience how Snowflake's unified platform enables intelligent, data-driven decision making.
 
 ## 🚀 Quick Start
 
 Get up and running with this demo in just a few steps:
 
 1. **Setup**: Run the setup script to create all necessary Snowflake objects
-2. **Explore**: Open the starter notebook to begin your analysis journey  
-3. **Interact**: Launch the Streamlit app for interactive data exploration
-4. **Learn**: Follow along with the step-by-step QuickStart guide
+2. **Experience**: Follow the Snowflake Intelligence demo prompts to explore AI-powered analytics
 
 For detailed instructions, see the [Getting Started](#-getting-started) section below.
 
@@ -19,10 +17,8 @@ For detailed instructions, see the [Getting Started](#-getting-started) section 
 🗄️ **Database Architecture** - Design and implement scalable database structures
 🔧 **Object Management** - Create and manage databases, schemas, and data objects
 📋 **Semantic Modeling** - Build consistent data definitions and metadata layers
-🌐 **Web Applications** - Build interactive dashboards with Streamlit
 🤖 **AI & ML** - Leverage Snowflake Cortex for intelligent data processing
 💭 **NLP Techniques** - Implement sentiment analysis and text processing pipelines
-⚡ **Performance Optimization** - Best practices for query performance and resource management
 🏗️ **Modern Architecture** - Implement cloud-native data engineering patterns
 
 ## 🛠️ What You'll Build
@@ -71,8 +67,8 @@ Run the setup script to create all necessary Snowflake objects:
 ```
 
 This will create:
-- Database: `RETAIL_SNOWFLAKE_INTELLIGENCE_DB`
-- Warehouse: `FOR`
+- Database: `SNOWFLAKE_INTELLIGENCE`
+- Warehouse: `RETAIL_SNOWFLAKE_INTELLIGENCE_WH`
 - Role: `RETAIL_SNOWFLAKE_INTELLIGENCE_ROLE`
 - Tables and views for data analysis
 
@@ -110,12 +106,11 @@ When you're done exploring, clean up the resources:
 ## 🔧 Configuration
 
 The setup script will create all necessary Snowflake objects including:
-- 🗄️ Databases: RETAIL_SNOWFLAKE_INTELLIGENCE_DB, SNOWFLAKE_INTELLIGENCE, AND
-- 📂 Schemas: ANALYTICS, AGENTS
-- ⚡ Warehouses: FOR, RETAIL_SNOWFLAKE_INTELLIGENCE_WH
+- 🗄️ Databases: SNOWFLAKE_INTELLIGENCE, RETAIL_SNOWFLAKE_INTELLIGENCE_DB
+- 📂 Schemas: AGENTS, ANALYTICS
+- ⚡ Warehouses: RETAIL_SNOWFLAKE_INTELLIGENCE_WH
 - 👤 Roles: RETAIL_SNOWFLAKE_INTELLIGENCE_ROLE
-- 📋 Tables & Views: 10 data objects for analysis
-- ⚙️ Functions: 1 custom functions and procedures
+- 📋 Tables & Views: 9 data objects for analysis
 
 ## 📊 Data & Analytics
 
@@ -154,7 +149,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - 💬 [Snowflake Community](https://community.snowflake.com/)
 - 📖 [Snowflake Documentation](https://docs.snowflake.com/)
-- 🚀 [QuickStart Guide](https://quickstarts.snowflake.com/guide/no-notebooks-test)
+- 🚀 [QuickStart Guide](https://quickstarts.snowflake.com/guide/teardown-fix-test)
 
 ---
 

@@ -1,21 +1,15 @@
 /*--
- No Notebooks Test - Teardown Script
+ Retail Intelligence - Teardown Script
  This script removes all objects created by the setup script
 --*/
 
 USE ROLE accountadmin;
 
 -- Drop database (cascades to all schemas, tables, views, etc.)
-DROP DATABASE IF EXISTS RETAIL_SNOWFLAKE_INTELLIGENCE_DB;
-
--- Drop database (cascades to all schemas, tables, views, etc.)
 DROP DATABASE IF EXISTS SNOWFLAKE_INTELLIGENCE;
 
 -- Drop database (cascades to all schemas, tables, views, etc.)
-DROP DATABASE IF EXISTS AND;
-
--- Drop warehouse
-DROP WAREHOUSE IF EXISTS FOR;
+DROP DATABASE IF EXISTS RETAIL_SNOWFLAKE_INTELLIGENCE_DB;
 
 -- Drop warehouse
 DROP WAREHOUSE IF EXISTS RETAIL_SNOWFLAKE_INTELLIGENCE_WH;

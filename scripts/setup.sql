@@ -5,6 +5,10 @@
 
 USE ROLE accountadmin;
 
+-- assign Query Tag to Session. This helps with performance monitoring and troubleshooting
+ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"retail_intelligence","version":{"major":1,"minor":0},"attributes":{"is_quickstart":1,"source":"sql"}}';
+
+
 -- Create custom role for Retail Snowflake Intelligence
 CREATE OR REPLACE ROLE retail_snowflake_intelligence_role
     COMMENT = 'Role for Retail Snowflake Intelligence with AI_TRANSCRIBE and Cortex Agents';
@@ -24,8 +28,6 @@ GRANT OPERATE ON WAREHOUSE retail_snowflake_intelligence_wh TO ROLE retail_snowf
 
 USE WAREHOUSE retail_snowflake_intelligence_wh;
 
--- assign Query Tag to Session. This helps with performance monitoring and troubleshooting
-ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"retail_snowflake_intelligence","version":{"major":1, "minor":0},"attributes":{"is_quickstart":1, "source":"sql"}}';
 
 -- Create database and schemas
 CREATE DATABASE IF NOT EXISTS retail_snowflake_intelligence_db;
@@ -103,8 +105,6 @@ USE DATABASE retail_snowflake_intelligence_db;
 USE WAREHOUSE retail_snowflake_intelligence_wh;
 USE SCHEMA analytics;
 
--- Set query tag for tracking
-ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"lather_and_leaf","version":{"major":1, "minor":0},"attributes":{"is_quickstart":1, "source":"sql"}}';
 
 -- =============================================================================
 -- CORE TABLES
