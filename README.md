@@ -1,39 +1,6 @@
-[![Snowflake - Certified](https://img.shields.io/badge/Snowflake-Certified-2ea44f?style=for-the-badge&logo=snowflake)](https://developers.snowflake.com/solutions/)
-# Retail Intelligence
+# Retail Snowflake Intelligence
 
-This comprehensive guide demonstrates Comprehensive demo showcasing database setup, semantic models with streamlit, snowflake-cortex, sentiment-analysis. You will explore Snowflake's powerful capabilities to build a complete data solution.
-
-## 🚀 Quick Start
-
-Get up and running with this demo in just a few steps:
-
-1. **Setup**: Run the setup script to create all necessary Snowflake objects
-2. **Experience**: Explore AI-powered analytics and intelligent data processing
-
-For detailed instructions, see the [Getting Started](#-getting-started) section below.
-
-## 📚 What You'll Learn
-
-🗄️ **Database Architecture** - Design and implement scalable database structures
-🔧 **Object Management** - Create and manage databases, schemas, and data objects
-📋 **Semantic Modeling** - Build consistent data definitions and metadata layers
-🤖 **AI & ML** - Leverage Snowflake Cortex for intelligent data processing
-💭 **NLP Techniques** - Implement sentiment analysis and text processing pipelines
-🏗️ **Modern Architecture** - Implement cloud-native data engineering patterns
-
-## 🛠️ What You'll Build
-
-🏛️ **Production Database** - Complete setup with all necessary objects and permissions
-🔗 **Semantic Layer** - Consistent metadata and business logic definitions
-🤖 **AI-Powered Analytics** - Intelligent data processing with Snowflake Cortex
-
-## 📋 Prerequisites
-
-☁️ **Snowflake Account** - Active account with appropriate privileges
-📝 **SQL Knowledge** - Basic understanding of SQL syntax and concepts
-📊 **Domain Knowledge** - Basic understanding of retail analytics and business context
-🤖 **Cortex Access** - Snowflake account with Cortex features enabled
-📊 **Data Analysis** - Basic understanding of data analysis principles
+this repo contains everything you need to get started with Snowflake Intelligence with retail data. You will learn how Snowflake Intelligence leverages natural language to drive deep insights from you data. This example uses a fictional hand soap company, "Lather and Leaf," to demonstrate a common retail use case.
 
 ## Repository Structure
 ```
@@ -44,82 +11,103 @@ For detailed instructions, see the [Getting Started](#-getting-started) section 
 │   ├── setup.sql          # Database setup script
 │   ├── teardown.sql       # Cleanup script
 │   └── semantic_models/   # Semantic models and configurations
+└── streamlit/             # Streamlit applications
+    ├── app.py             # Main Streamlit app
+    └── requirements.txt   # Python dependencies
 ```
 
-## 🏁 Getting Started
+## 📋 Getting Started
 
-Follow these steps to get the demo running:
+***
 
-### 1️⃣ Database Setup
+### **Required Setup**
 
-Run the setup script to create all necessary Snowflake objects:
+Building a Cortex Agent for Snowflake Intelligence involves three main steps: creating the necessary Snowflake objects, uploading your semantic model files, and finally, creating and configuring the agent itself in Snowsight.
 
-```sql
--- Execute in Snowflake worksheet
--- Copy and paste contents of scripts/setup.sql
-```
+-----
+### **1. Setting Up the Environment**
 
-This will create:
-- Database: `SNOWFLAKE_INTELLIGENCE`
-- Warehouse: `RETAIL_SNOWFLAKE_INTELLIGENCE_WH`
-- Role: `RETAIL_SNOWFLAKE_INTELLIGENCE_ROLE`
-- Tables and views for data analysis
+First, you'll need to create the database, schema, and a named internal stage where your semantic model files will be stored. This ensures a clean and organized environment for your demo.
 
-### 4️⃣ Cleanup (Optional)
+Run the SQL commands in scripts/setup.sql in a Snowflake worksheet
 
-When you're done exploring, clean up the resources:
+-----
 
-```sql
--- Execute in Snowflake worksheet
--- Copy and paste contents of scripts/teardown.sql
-```
+### **2. Uploading Semantic Model Files via Snowsight**
 
-## 🔧 Configuration
+Once the stage is created, you can manually upload your semantic model YAML files directly through the Snowsight user interface.
 
-The setup script will create all necessary Snowflake objects including:
-- 🗄️ Databases: SNOWFLAKE_INTELLIGENCE, RETAIL_SNOWFLAKE_INTELLIGENCE_DB
-- 📂 Schemas: ANALYTICS, AGENTS
-- ⚡ Warehouses: RETAIL_SNOWFLAKE_INTELLIGENCE_WH
-- 👤 Roles: RETAIL_SNOWFLAKE_INTELLIGENCE_ROLE
-- 📋 Tables & Views: 9 data objects for analysis
+1.  **Navigate to your Stage in Snowsight:**
 
-## 📊 Data & Analytics
+      * In the Snowsight left-hand navigation pane, go to **Data**.
+      * Expand your database (`RETAIL_SNOWFLAKE_INTELLIGENCE_DB`).
+      * Expand the schema (`ANALYTICS`).
+      * Click on **Stages**.
+      * Click on the `SEMANTIC_MODELS` stage.
 
-This demo showcases advanced analytics capabilities including:
+2.  **Upload the Files:**
 
-- 💭 **Sentiment Analysis** - Process and analyze text data to understand customer opinions
-- 📊 **Statistical Modeling** - Apply statistical methods to derive business insights  
-- 🔍 **Data Exploration** - Interactive tools for discovering patterns and trends
-- 📈 **Visualization** - Rich charts and dashboards for data storytelling
+      * Download the files from scripts/semantic_models/
+      * Click the **+ Upload** button in the top-right corner.
+      * A file explorer window will open.
+      * Select your three semantic model YAML files (`product_comments_and_stats.yaml`, `product_inventory.yaml`, `product_sales_analysis.yaml`) from your local machine.
+      * Click **Open** to begin the upload. You will see a progress bar for each file, and they will appear in the stage's file list once complete.
 
-## 🎯 Key Features
+-----
 
-✨ **Production Ready** - Enterprise-grade setup with proper permissions and security
-🚀 **Fast Setup** - Get running in minutes with automated database creation
-🤖 **AI-Powered** - Leverages Snowflake Cortex for intelligent data processing
-🔗 **Semantic Layer** - Consistent data definitions and business logic
-💭 **NLP Capabilities** - Advanced text analysis and sentiment processing
-🧹 **Easy Cleanup** - Automated teardown script for resource management
-📚 **Well Documented** - Comprehensive guides and inline documentation
+### **3. Creating the Cortex Agent**
 
-## 🤝 Contributing
+With your files staged, you can now create the agent in the Snowflake UI and connect it to your semantic models.
 
-Found an issue or want to contribute? We welcome contributions! Please:
-1. Fork this repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+1.  **Navigate to the Snowflake Intelligence UI:**
 
-## 📄 License
+      * In Snowsight, go to **AI & ML**.
+      * Select **Agents**.
+      * Click the **+ Create Agent** button.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+2.  **Fill in the Agent Details:**
 
-## 🆘 Support
+      * Give your agent a **name** (e.g., `Retail_Analytics_Agent`).
+      * Provide a **description** that explains the agent's purpose, such as "An agent to help a direct-to-consumer company analyze sales, inventory, and customer sentiment."
 
-- 💬 [Snowflake Community](https://community.snowflake.com/)
-- 📖 [Snowflake Documentation](https://docs.snowflake.com/)
-- 🚀 [QuickStart Guide](https://quickstarts.snowflake.com/guide/retail-intelligence)
+3.  **Add the Semantic Models as Tools:**
 
----
+      * In the agent creation wizard, go to the **Tools** section.
+      * Under the "Cortex Analyst" heading, click the **+ Add** button.
+      * Select **Semantic Model File**.
+      * Choose the database, schema, and stage you created (`RETAIL_SNOWFLAKE_INTELLIGENCE_DB`, `ANALYTICS`, `SEMANTIC_MODELS`).
+      * Select each of your three YAML files from the list (`sales_model.yaml`, `inventory_model.yaml`, `comments_model.yaml`).
+      * Select `RETAIL_SNOWFLAKE_INTELLIGENCE_WH` warehouse
+      * Add a timeout of 60 seconds
+      * Have Cortex create a description 
+      * Click **Add**. This will add all three models to your agent.
 
-*This demo showcases the power of Snowflake's Data Cloud for modern analytics and AI workloads.*
+4.  **Finalize and Create:**
+
+      * Review the agent's details and tools.
+      * Click **Create Agent**.
+
+Your new Cortex Agent is now configured and ready to be used in the Snowflake Intelligence chat. You can now use the prompts from the demo to test its functionality.
+
+***
+
+### **Prompts for Snowflake Intelligence**
+
+These are the key prompts that can be used to explore Snowflake Intelligence, designed to be copy-pasted directly into the Snowflake Intelligence chat. They demonstrate a progression from simple to complex, multi-source questions.
+
+1.  **How are the sales for my 2 newest scents doing?**
+    * **Purpose:** This initial query shows Snowflake Intelligence’s ability to summarize structured sales data.
+
+2.  **Are our 2 new scents getting a lot of positive buzz online?**
+    * **Purpose:** This highlights the platform’s capability to analyze unstructured data (social media comments, reviews) and provide a sentiment overview.
+
+3.  **What are the latest comments for Peachwood Breeze?**
+    * **Purpose:** This illustrates how the platform can retrieve specific, unstructured data points (text comments) to provide tangible evidence that supports the analysis.
+
+4.  **If Peachwood Breeze sells online like previous top performing scents, what will be the likely sales online over the next 12 weeks? And do I have enough inventory to fulfill those sales from my online distribution center?**
+    * **Purpose:** This powerful prompt showcases **predictive analytics** and **multi-source querying**, combining a sales forecast with an inventory check.
+
+5.  **I want to be safe and handle online sales of up to 16,000 units. If that happens, are there any distribution centers that are likely to have extra inventory so we can transfer to meet online demand?**
+    * **Purpose:** The final prompt shows the platform's ability to handle **"what-if" scenarios** and provide a concrete, actionable business recommendation.
+
+***
