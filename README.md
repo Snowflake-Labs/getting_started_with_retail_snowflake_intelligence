@@ -1,6 +1,8 @@
+[![Snowflake - Certified](https://img.shields.io/badge/Snowflake-Certified-2ea44f?style=for-the-badge&logo=snowflake)](https://developers.snowflake.com/solutions/)
+
 # Retail Snowflake Intelligence
 
-this repo contains everything you need to get started with Snowflake Intelligence with retail data. You will learn how Snowflake Intelligence leverages natural language to drive deep insights from you data. This example uses a fictional hand soap company, "Lather and Leaf," to demonstrate a common retail use case.
+this repo contains everything you need to get started with Snowflake Intelligence with retail data. You will learn how Snowflake Intelligence leverages natural language to drive deep insights from you data. This example uses a fictional hand soap company, "Lather and Leaf," to demonstrate a common retail use case. For a full tutorial, view the quickstart [here](https://quickstarts.snowflake.com/guide/retail_snowflake_intelligence).
 
 ## Repository Structure
 ```
