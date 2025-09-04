@@ -13,9 +13,6 @@ this repo contains everything you need to get started with Snowflake Intelligenc
 │   ├── setup.sql          # Database setup script
 │   ├── teardown.sql       # Cleanup script
 │   └── semantic_models/   # Semantic models and configurations
-└── streamlit/             # Streamlit applications
-    ├── app.py             # Main Streamlit app
-    └── requirements.txt   # Python dependencies
 ```
 
 ## 📋 Getting Started
