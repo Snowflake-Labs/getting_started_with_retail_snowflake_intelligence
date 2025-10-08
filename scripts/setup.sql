@@ -51,6 +51,7 @@ GRANT CREATE STAGE ON SCHEMA retail_snowflake_intelligence_db.analytics TO ROLE 
 GRANT CREATE FILE FORMAT ON SCHEMA retail_snowflake_intelligence_db.analytics TO ROLE retail_snowflake_intelligence_role;
 GRANT CREATE FUNCTION ON SCHEMA retail_snowflake_intelligence_db.analytics TO ROLE retail_snowflake_intelligence_role;
 GRANT CREATE CORTEX SEARCH SERVICE ON SCHEMA retail_snowflake_intelligence_db.analytics TO ROLE retail_snowflake_intelligence_role;
+GRANT CREATE SEMANTIC VIEW ON SCHEMA retail_snowflake_intelligence_db.analytics TO ROLE retail_snowflake_intelligence_role;
 GRANT CREATE STREAMLIT ON SCHEMA retail_snowflake_intelligence_db.analytics TO ROLE retail_snowflake_intelligence_role;
 
 -- Grant CORTEX_USER role for Cortex functions access
