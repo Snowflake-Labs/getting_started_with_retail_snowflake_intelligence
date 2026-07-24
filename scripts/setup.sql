@@ -487,7 +487,14 @@ def main(session):
 
     # Clear existing data and write new data
     session.sql("TRUNCATE TABLE DAILY_COMMENT_SUMMARY").collect()
-    session.create_dataframe(df).write.mode("append").save_as_table('DAILY_COMMENT_SUMMARY')
+    import numpy as _np, math as _math
+    def _to_py(v):
+        if isinstance(v, _np.integer): return int(v)
+        if isinstance(v, _np.floating): return None if _math.isnan(v) else float(v)
+        if isinstance(v, float) and _math.isnan(v): return None
+        return v
+    _rows = [tuple(_to_py(v) for v in r) for r in df.itertuples(index=False, name=None)]
+    session.create_dataframe(_rows, schema=list(df.columns)).write.mode("append").save_as_table('DAILY_COMMENT_SUMMARY')
 
     return f"Data successfully generated and inserted into DAILY_COMMENT_SUMMARY: {len(df)} records"
 $$;
@@ -628,7 +635,14 @@ def main(session):
 
     # Clear existing data and write new data
     session.sql("TRUNCATE TABLE PRODUCT_COMMENT_STATS").collect()
-    session.create_dataframe(final_data).write.mode("append").save_as_table('PRODUCT_COMMENT_STATS')
+    import numpy as _np, math as _math
+    def _to_py(v):
+        if isinstance(v, _np.integer): return int(v)
+        if isinstance(v, _np.floating): return None if _math.isnan(v) else float(v)
+        if isinstance(v, float) and _math.isnan(v): return None
+        return v
+    _rows = [tuple(_to_py(v) for v in r) for r in final_data.itertuples(index=False, name=None)]
+    session.create_dataframe(_rows, schema=list(final_data.columns)).write.mode("append").save_as_table('PRODUCT_COMMENT_STATS')
 
     return f"Successfully generated product comment statistics: {len(final_data)} records"
 $$;
@@ -814,7 +828,14 @@ def main(session):
 
     # Clear existing data and write new data
     session.sql("TRUNCATE TABLE PRODUCT_SALES").collect()
-    session.create_dataframe(df).write.mode("append").save_as_table('PRODUCT_SALES')
+    import numpy as _np, math as _math
+    def _to_py(v):
+        if isinstance(v, _np.integer): return int(v)
+        if isinstance(v, _np.floating): return None if _math.isnan(v) else float(v)
+        if isinstance(v, float) and _math.isnan(v): return None
+        return v
+    _rows = [tuple(_to_py(v) for v in r) for r in df.itertuples(index=False, name=None)]
+    session.create_dataframe(_rows, schema=list(df.columns)).write.mode("append").save_as_table('PRODUCT_SALES')
 
     return f"Data successfully generated and inserted into PRODUCT_SALES: {len(df)} records"
 $$;
@@ -975,7 +996,14 @@ def main(session):
 
     # Clear existing data and write new data
     session.sql("TRUNCATE TABLE PRODUCT_SALES_ANALYSIS").collect()
-    session.create_dataframe(periodic_df).write.mode("append").save_as_table('PRODUCT_SALES_ANALYSIS')
+    import numpy as _np, math as _math
+    def _to_py(v):
+        if isinstance(v, _np.integer): return int(v)
+        if isinstance(v, _np.floating): return None if _math.isnan(v) else float(v)
+        if isinstance(v, float) and _math.isnan(v): return None
+        return v
+    _rows = [tuple(_to_py(v) for v in r) for r in periodic_df.itertuples(index=False, name=None)]
+    session.create_dataframe(_rows, schema=list(periodic_df.columns)).write.mode("append").save_as_table('PRODUCT_SALES_ANALYSIS')
 
     return f"Generated periodic analysis data: {len(periodic_df)} records"
 $$;
