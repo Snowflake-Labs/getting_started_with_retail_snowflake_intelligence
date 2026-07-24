@@ -630,8 +630,8 @@ def main(session):
     final_data = final_stats[['PRODUCT_NAME', 'WEEK_START_DATE', 'WEEK_NUMBER', 
                              'TOTAL_REVIEWS', 'TOTAL_POSITIVE_REVIEWS', 'TOTAL_NEGATIVE_REVIEWS',
                              'DAILY_REVIEW_AVG', 'POSITIVE_REVIEW_RATIO', 'AVG_SENTIMENT', 
-                             'SENTIMENT_STDDEV', 'SENTIMENT_PERCENTILE', 'SENTIMENT_Z_SCORE', 
-                             'SENTIMENT_P_VALUE', 'SENTIMENT_TREND', 'TREND_P_VALUE']]
+                             'SENTIMENT_STDDEV', 'SENTIMENT_P_VALUE', 'SENTIMENT_PERCENTILE',
+                             'SENTIMENT_Z_SCORE', 'SENTIMENT_TREND', 'TREND_P_VALUE']]
 
     # Clear existing data and write new data
     session.sql("TRUNCATE TABLE PRODUCT_COMMENT_STATS").collect()
@@ -824,10 +824,11 @@ def main(session):
 
     # Convert to DataFrame
     df = pd.DataFrame(sales_data)
+    df = df[['PRODUCT_NAME', 'DAY', 'DAILY_SALES_UNITS_ONLINE', 'DAILY_SALES_UNITS_NORTHEAST',
+             'DAILY_SALES_UNITS_NORTHWEST', 'DAILY_SALES_UNITS_SOUTHEAST', 'DAILY_SALES_UNITS_SOUTHWEST',
+             'DAILY_SALES_UNITS_TOTAL', 'LAUNCH_DATE', 'DAYS_SINCE_LAUNCH', 'SEASON',
+             'IS_WEEKEND', 'IS_HOLIDAY', 'PROMOTION_ACTIVE']]
     df = df.sort_values(by=['DAY'])
-
-    # Clear existing data and write new data
-    session.sql("TRUNCATE TABLE PRODUCT_SALES").collect()
     import numpy as _np, math as _math
     def _to_py(v):
         if isinstance(v, _np.integer): return int(v)
