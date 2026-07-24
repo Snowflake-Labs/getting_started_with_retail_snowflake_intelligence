@@ -519,7 +519,7 @@ except ImportError:
 
 def main(session):
     # Read data from DAILY_COMMENT_SUMMARY
-    df = session.table("DAILY_COMMENT_SUMMARY").to_pandas().sort_values(by=['PRODUCT_NAME', 'DAY'])
+    df = pd.DataFrame([r.as_dict() for r in session.table("DAILY_COMMENT_SUMMARY").collect()]).sort_values(by=['PRODUCT_NAME', 'DAY'])
     
     # Function to identify launch date for each scent
     def get_launch_dates(df):
@@ -859,7 +859,7 @@ except ImportError:
 
 def main(session):
     # Read PRODUCT_SALES data
-    df = session.table("PRODUCT_SALES").to_pandas()
+    df = pd.DataFrame([r.as_dict() for r in session.table("PRODUCT_SALES").collect()])
     
     def generate_periodic_analysis(df):
         max_weeks = 30
