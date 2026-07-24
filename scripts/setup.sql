@@ -487,7 +487,7 @@ def main(session):
 
     # Clear existing data and write new data
     session.sql("TRUNCATE TABLE DAILY_COMMENT_SUMMARY").collect()
-    session.write_pandas(df, 'DAILY_COMMENT_SUMMARY')
+    session.create_dataframe(df).write.mode("append").save_as_table('DAILY_COMMENT_SUMMARY')
 
     return f"Data successfully generated and inserted into DAILY_COMMENT_SUMMARY: {len(df)} records"
 $$;
@@ -628,7 +628,7 @@ def main(session):
 
     # Clear existing data and write new data
     session.sql("TRUNCATE TABLE PRODUCT_COMMENT_STATS").collect()
-    session.write_pandas(final_data, 'PRODUCT_COMMENT_STATS')
+    session.create_dataframe(final_data).write.mode("append").save_as_table('PRODUCT_COMMENT_STATS')
 
     return f"Successfully generated product comment statistics: {len(final_data)} records"
 $$;
@@ -814,7 +814,7 @@ def main(session):
 
     # Clear existing data and write new data
     session.sql("TRUNCATE TABLE PRODUCT_SALES").collect()
-    session.write_pandas(df, 'PRODUCT_SALES')
+    session.create_dataframe(df).write.mode("append").save_as_table('PRODUCT_SALES')
 
     return f"Data successfully generated and inserted into PRODUCT_SALES: {len(df)} records"
 $$;
@@ -975,7 +975,7 @@ def main(session):
 
     # Clear existing data and write new data
     session.sql("TRUNCATE TABLE PRODUCT_SALES_ANALYSIS").collect()
-    session.write_pandas(periodic_df, 'PRODUCT_SALES_ANALYSIS')
+    session.create_dataframe(periodic_df).write.mode("append").save_as_table('PRODUCT_SALES_ANALYSIS')
 
     return f"Generated periodic analysis data: {len(periodic_df)} records"
 $$;
