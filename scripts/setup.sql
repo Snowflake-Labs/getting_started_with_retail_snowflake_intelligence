@@ -280,9 +280,14 @@ from instagram_page_stream f,
 -- Enriched feedback view with sentiment analysis
 CREATE OR REPLACE VIEW enriched_feedback AS
 SELECT *, 
-       SNOWFLAKE.CORTEX.SENTIMENT(comment_title||' '||comment_text) as sentiment,
-       trim(SNOWFLAKE.CORTEX.CLASSIFY_TEXT(comment_title||' '||comment_text, 
-           ['Scent', 'Packaging', 'Quality', 'Price', 'Shipping'])['label'], '"') as topic
+       AI_COMPLETE(
+           model => 'claude-haiku-4-5',
+           prompt => CONCAT('Rate the sentiment of the following text from -1.0 (very negative) to 1.0 (very positive). Respond with only the score. Text: ', comment_title||' '||comment_text),
+           model_parameters => {'temperature': 0},
+           response_format => TYPE OBJECT(score FLOAT)
+       ):score::FLOAT as sentiment,
+       AI_CLASSIFY(comment_title||' '||comment_text,
+           ['Scent', 'Packaging', 'Quality', 'Price', 'Shipping']):labels[0]::STRING as topic
 FROM consolidated_feedback;
 
 -- =============================================================================
@@ -1368,16 +1373,16 @@ SELECT lower(product_name),
        'ecommerce'
 FROM product_reviews
 UNION ALL
-SELECT lower(trim(get(snowflake.cortex.extract_answer(message, 'What is the name of the specific product or scent referenced in the comment? May be capitalized in the comment eg Frosted Juniper or Peachwood Breeze.'), 0):answer, '"')) as product_name,
-       snowflake.cortex.complete('claude-3-5-sonnet', 'Write a short title, just the title and no other text, for this review: '||message) as comment_title,
+SELECT lower(trim(AI_EXTRACT(text => message, responseFormat => {'product': 'What is the name of the specific product or scent referenced in the comment? May be capitalized in the comment eg Frosted Juniper or Peachwood Breeze.'}):response:product::STRING)) as product_name,
+       AI_COMPLETE('claude-3-5-sonnet', 'Write a short title, just the title and no other text, for this review: '||message) as comment_title,
        message as comment_text,
        from_name as commenter,
        post_time::date as comment_date, 
        'facebook'
 FROM facebook_posts
 UNION ALL
-SELECT lower(trim(get(snowflake.cortex.extract_answer(message, 'What is the name of the specific product or scent referenced in the comment? May be capitalized in the comment eg Frosted Juniper or Peachwood Breeze.'), 0):answer, '"')) as product_name,
-       snowflake.cortex.complete('claude-3-5-sonnet', 'Write a short title, just the title and no other text, for this review: '||message) as comment_title,
+SELECT lower(trim(AI_EXTRACT(text => message, responseFormat => {'product': 'What is the name of the specific product or scent referenced in the comment? May be capitalized in the comment eg Frosted Juniper or Peachwood Breeze.'}):response:product::STRING)) as product_name,
+       AI_COMPLETE('claude-3-5-sonnet', 'Write a short title, just the title and no other text, for this review: '||message) as comment_title,
        message as comment_text,
        from_name as commenter,
        post_time::date as comment_date, 
